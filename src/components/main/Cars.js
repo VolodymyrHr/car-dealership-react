@@ -17,17 +17,13 @@ function Cars() {
         }
 
         getCars();
-
-        return function cleanup(){
-            getCars();
-        }
     }, [])
 
     return (
         <div className="cars">
             <h2>Cars</h2>
             <ul>
-                {cars.map(el => <Car key={el.id} id={el.id} brand={el.brand} model={el.model} cost={el.cost}/>)}
+                {cars.map(el => <Car key={el.id} {...el}/>)}
             </ul>
         </div>
     )

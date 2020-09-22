@@ -10,7 +10,7 @@ function Main() {
     return (
         <main>
           <Switch>
-            <Route path='/cars' component={Cars}/>
+            <Route exact path='/cars' component={Cars}/>
             <Route path='/managers' component={Managers}/>
             <Route path='/customers' component={Customers}/>
             <Route path='/deals' component={Deals}/>
