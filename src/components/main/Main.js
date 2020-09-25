@@ -5,6 +5,7 @@ import Cars from './Cars'
 import Managers from './Managers'
 import Customers from './Customers'
 import Deals from './Deals'
+import FullDeal from './FullDeal'
 
 function Main() {
     return (
@@ -13,7 +14,8 @@ function Main() {
             <Route exact path='/cars' component={Cars}/>
             <Route path='/managers' component={Managers}/>
             <Route path='/customers' component={Customers}/>
-            <Route path='/deals' component={Deals}/>
+            <Route exact path='/deals' component={Deals}/>
+            <Route path='/deals/:number' component={FullDeal}/>
           </Switch>            
         </main>
     )

@@ -1,25 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
+import { Link, Switch, Route } from 'react-router-dom'
 
-import useFetch from './../services'
+import {useFetch, useFetchNoSetFunc} from './../services'
 import Select from './../Select'
 import Deal from './Deal'
+import FullDeal from './FullDeal'
 
 function Deals() {
-    const previousDeals = useFetch('deals', []);
+    const [deals, setDeal] = useFetch('deals', []);
 
-    const cars = useFetch('cars', []);
-    const managers = useFetch('managers', []);
-    const customers = useFetch('customers', []);
+    const cars = useFetchNoSetFunc('cars', []);
+    const managers = useFetchNoSetFunc('managers', []);
+    const customers = useFetchNoSetFunc('customers', []);
 
     const [carId, setCarId] = useState(0);
     const [managerId, setManagerId] = useState(0);
     const [customerId, setCustomerId] = useState(0);
-
-    const [deals, setDeal] = useState([]);
-
-    useEffect(() => {
-        setDeal([...previousDeals]);
-    }, [previousDeals])
 
     function addDeal(event){
         event.preventDefault();
@@ -32,7 +28,7 @@ function Deals() {
             },
             body: JSON.stringify(newDeal)
         }).then(response => response.json())
-        .then(deal => setDeal([...previousDeals, deal]))
+        .then(deal => setDeal([...deals, deal]))
     }
 
     return (
@@ -56,8 +52,11 @@ function Deals() {
             <span className='separatin__line'></span>
             <h2>Previous deals</h2>
             <ul>
-                {deals.map(item => <Deal key={item.id} {...item}/>)}
+                {deals.map(item => <Link to={'/deals/' + item.id} key={item.id}><Deal {...item}/></Link>)}
             </ul>
+            <Switch>
+                <Route path='/deals/:number' component={FullDeal}/>
+            </Switch>
         </div>
     )
 }
